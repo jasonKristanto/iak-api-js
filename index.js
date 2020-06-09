@@ -20,6 +20,7 @@ import {checkstatus, inquiry, payment, pricelist as pricelistpasca, receipt} fro
   console.log(pricelistResponse);
 
   const pricelistPascaResponse = await pricelistpasca(
+      "sandbox",
       "kudo",
       "6155c989ff465120",
       "all"
@@ -28,6 +29,7 @@ import {checkstatus, inquiry, payment, pricelist as pricelistpasca, receipt} fro
   console.log(pricelistPascaResponse);
 
   const inquiryPascaResponse = await inquiry(
+      "sandbox",
       "kudo",
       "6155c989ff465120",
       "PBBKOT.CIMAHI",
@@ -38,6 +40,7 @@ import {checkstatus, inquiry, payment, pricelist as pricelistpasca, receipt} fro
   console.log(inquiryPascaResponse);
 
   const payPascaResponse = await payment(
+      "sandbox",
       "kudo",
       "6155c989ff465120",
       "9881240"
@@ -46,6 +49,7 @@ import {checkstatus, inquiry, payment, pricelist as pricelistpasca, receipt} fro
   console.log(payPascaResponse);
 
   const checkstatusPascaResponse = await checkstatus(
+      "sandbox",
       "kudo",
       "6155c989ff465120",
       "PBB123"
@@ -54,10 +58,31 @@ import {checkstatus, inquiry, payment, pricelist as pricelistpasca, receipt} fro
   console.log(checkstatusPascaResponse);
 
   const receiptPascaResponse = await receipt(
+      "sandbox",
       "9881240"
   );
   console.log("Receipt Pasca");
   console.log(receiptPascaResponse);
+
+  const pricelistPascaResponseProd = await pricelistpasca(
+      "prod",
+      "kudo",
+      "2895d383c9744242289",
+      "all"
+  );
+  console.log("Pricelist Pasca Prod");
+  console.log(pricelistPascaResponseProd);
+
+  const inquiryPascaResponseProd = await inquiry(
+      "prod",
+      "082210138584",
+      "1231234",
+      "PLNPOSTPAID",
+      "543400746892",
+      "PLN123"
+  );
+  console.log("Inquiry Pasca Prod");
+  console.log(inquiryPascaResponseProd);
 
 })();
 // module.exports = IAK;

@@ -1,13 +1,23 @@
 const crypto = require("crypto");
 const axios = require("axios");
 
-import { endpoint } from "../config/config";
+import {endpoint} from "../config/config";
 
 const axiosConfig = {
-    'Content-Type' : 'application/json'
+    'Content-Type': 'application/json'
 };
 
-let url = endpoint.POSTPAID_ENDPOINT + 'api/v1/bill/check/';
+function getBaseUrl(env) {
+    return env.toLowerCase() === 'prod' ? endpoint.POSTPAID_PROD_ENDPOINT : endpoint.POSTPAID_SANDBOX_ENDPOINT;
+}
+
+function getMainUrl(env) {
+    return getBaseUrl(env) + 'api/v1/bill/check';
+}
+
+function getReceiptUrl(env, tr_id) {
+    return getBaseUrl(env) + 'api/v1/download/' + tr_id + '/1';
+}
 
 function hashSign(username, key, salt) {
     return crypto
@@ -16,20 +26,20 @@ function hashSign(username, key, salt) {
         .digest("hex")
 }
 
-function sendRequest(method, config=null, url, payload=null) {
+function sendRequest(method, config = null, url, payload = null) {
     let param;
 
     if (method.toUpperCase() === 'POST') {
         param = {
-          method: method,
-          headers: config,
-          url: url,
-          data: payload
+            method: method,
+            headers: config,
+            url: url,
+            data: payload
         };
     } else {
         param = {
-          method: method,
-          url: url
+            method: method,
+            url: url
         };
     }
 
@@ -38,82 +48,91 @@ function sendRequest(method, config=null, url, payload=null) {
     });
 }
 
-export const pricelist = async (username, key, status) => {
-  try {
-    const commands = 'pricelist-pasca';
+export const pricelist = async (env, username, key, status) => {
+    try {
+        const commands = 'pricelist-pasca';
 
-    const payload = {
-      commands,
-      username,
-      sign: hashSign(username, key, 'pl'),
-      status
-    };
+        const url = getMainUrl(env);
 
-    return await sendRequest('POST', axiosConfig, url, payload);
-  } catch (error) {
-      console.error(error);
-  }
+        const payload = {
+            commands,
+            username,
+            sign: hashSign(username, key, 'pl'),
+            status
+        };
+
+        return await sendRequest('POST', axiosConfig, url, payload);
+    } catch (error) {
+        console.error(error);
+    }
 };
 
-export const inquiry = async (username, key, code, hp, ref_id) => {
-  try {
-    const commands = 'inq-pasca';
+export const inquiry = async (env, username, key, code, hp, ref_id) => {
+    try {
+        const url = getMainUrl(env);
 
-    const payload = {
-      commands,
-      username,
-      sign: hashSign(username, key, ref_id),
-      code,
-      hp,
-      ref_id
-    };
+        const commands = 'inq-pasca';
 
-    return await sendRequest('POST', axiosConfig, url, payload);
-  } catch (error) {
-      console.error(error);
-  }
+        const payload = {
+            commands,
+            username,
+            sign: hashSign(username, key, ref_id),
+            code,
+            hp,
+            ref_id
+        };
+
+        return await sendRequest('POST', axiosConfig, url, payload);
+    } catch (error) {
+        console.error(error);
+    }
 };
 
-export const payment = async (username, key, tr_id) => {
-  try {
-    const commands = 'pay-pasca';
+export const payment = async (env, username, key, tr_id) => {
+    try {
+        const url = getMainUrl(env);
 
-    const payload = {
-      commands,
-      username,
-      sign: hashSign(username, key, tr_id),
-      tr_id
-    };
+        const commands = 'pay-pasca';
 
-    return await sendRequest('POST', axiosConfig, url, payload);
-  } catch (error) {
-    console.error(error);
-  }
+        const payload = {
+            commands,
+            username,
+            sign: hashSign(username, key, tr_id),
+            tr_id
+        };
+
+        return await sendRequest('POST', axiosConfig, url, payload);
+    } catch (error) {
+        console.error(error);
+    }
 };
 
-export const checkstatus = async (username, key, ref_id) => {
-  try {
-    const commands = 'checkstatus';
+export const checkstatus = async (env, username, key, ref_id) => {
+    try {
+        const url = getMainUrl(env);
 
-    const payload = {
-      commands,
-      username,
-      sign: hashSign(username, key, 'cs'),
-      ref_id
-    };
+        const commands = 'checkstatus';
 
-    return await sendRequest('POST', axiosConfig, url, payload);
-  } catch (error) {
-    console.error(error);
-  }
+        const payload = {
+            commands,
+            username,
+            sign: hashSign(username, key, 'cs'),
+            ref_id
+        };
+
+        return await sendRequest('POST', axiosConfig, url, payload);
+    } catch (error) {
+        console.error(error);
+    }
 };
 
-export const receipt = async (tr_id) => {
-  try {
-    let url = endpoint.POSTPAID_ENDPOINT + 'api/v1/download/' + tr_id + '/1';
+export const receipt = async (env, tr_id) => {
+    try {
 
-    return await sendRequest('GET', null, url);
-  } catch (error) {
-    console.error(error);
-  }
+        const url = getReceiptUrl(env, tr_id)
+
+        return await sendRequest('GET', null, url);
+    } catch (error) {
+        console.error(error);
+    }
 };
