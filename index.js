@@ -1,6 +1,11 @@
 // ES6
 import { checkBalance } from "./library/prepaid";
 import { pricelist } from "./library/prepaid";
+import { inquiryPln } from "./library/prepaid";
+import { inquiryGame } from "./library/prepaid";
+import { inquiryGameServer } from "./library/prepaid";
+import { checkStatus } from "./library/prepaid";
+import { topUp } from "./library/prepaid";
 
 (async () => {
   const checkBalanceResponse = await checkBalance(
