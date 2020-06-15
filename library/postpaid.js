@@ -1,7 +1,7 @@
-const crypto = require("crypto");
 const axios = require("axios");
 
 import {endpoint} from "../config/config";
+import { hashSign } from "./Helpers/SignHelper";
 
 const axiosConfig = {
     'Content-Type': 'application/json'
@@ -17,13 +17,6 @@ function getMainUrl(env) {
 
 function getReceiptUrl(env, tr_id) {
     return getBaseUrl(env) + 'api/v1/download/' + tr_id + '/1';
-}
-
-function hashSign(username, key, salt) {
-    return crypto
-        .createHash("md5")
-        .update(`${username}${key}${salt}`)
-        .digest("hex")
 }
 
 function sendRequest(method, config = null, url, payload = null) {
