@@ -1,21 +1,33 @@
 // ES6
-import { checkBalance } from "./library/prepaid";
-import { pricelist } from "./library/prepaid";
-import { inquiryPln } from "./library/prepaid";
-import { inquiryGame } from "./library/prepaid";
-import { inquiryGameServer } from "./library/prepaid";
-import { checkStatus } from "./library/prepaid";
-import { topUp } from "./library/prepaid";
+import {
+  checkBalance,
+  pricelist,
+  inquiryPln,
+  inquiryGame,
+  inquiryGameServer,
+  checkStatus,
+  topUp
+} from "./library/prepaid";
+
+import {
+  checkStatus as checkStatusPasca,
+  inquiry,
+  payment,
+  pricelist as pricelistPasca,
+  receipt
+} from "./library/postpaid";
 
 (async () => {
   const checkBalanceResponse = await checkBalance(
+    "sandbox",
     "081807971414",
     "4105bb1aa80a7744"
   );
   console.log("Check Balance");
   console.log(checkBalanceResponse);
 
-  const pricelistResponse = await pricelist(
+  const pricelistResponse = await pricelistPasca(
+    "sandbox",
     "081807971414",
     "4105bb1aa80a7744",
     "all"
