@@ -24,7 +24,7 @@ export const checkBalance = async (env, username, key) => {
       sign: hashSign(username, key, "bl")
     };
 
-    return (await sendRequest("POST", headerRequest, url, payload)).data;
+    return await sendRequest("POST", headerRequest, url, payload);
   } catch (error) {
     console.error(error);
   }
@@ -40,7 +40,7 @@ export const pricelist = async (env, username, key, status) => {
       status
     };
 
-    return (await sendRequest("POST", headerRequest, url, payload)).data;
+    return await sendRequest("POST", headerRequest, url, payload);
   } catch (error) {
     console.error(error);
   }
@@ -56,7 +56,7 @@ export const inquiryPln = async (env, username, key, customerId) => {
       sign: hashSign(username, key, customerId)
     };
 
-    return (await sendRequest("POST", headerRequest, url, payload)).data;
+    return await sendRequest("POST", headerRequest, url, payload);
   } catch (error) {
     console.error(error);
   }
@@ -73,7 +73,7 @@ export const inquiryGame = async (env, username, key, customerId, gameCode) => {
       sign: hashSign(username, key, gameCode)
     };
 
-    return (await sendRequest("POST", headerRequest, url, payload)).data;
+    return await sendRequest("POST", headerRequest, url, payload);
   } catch (error) {
     console.error(error);
   }
@@ -89,7 +89,7 @@ export const inquiryGameServer = async (env, username, key, gameCode) => {
       sign: hashSign(username, key, gameCode)
     };
 
-    return (await sendRequest("POST", headerRequest, url, payload)).data;
+    return await sendRequest("POST", headerRequest, url, payload);
   } catch (error) {
     console.error(error);
   }
@@ -105,7 +105,7 @@ export const checkStatus = async (env, username, key, refId) => {
       sign: hashSign(username, key, refId)
     };
 
-    return (await sendRequest("POST", headerRequest, url, payload)).data;
+    return await sendRequest("POST", headerRequest, url, payload);
   } catch (error) {
     console.error(error);
   }
@@ -130,7 +130,7 @@ export const topUp = async (
       sign: hashSign(username, key, refId)
     };
 
-    return (await sendRequest("POST", headerRequest, url, payload)).data;
+    return await sendRequest("POST", headerRequest, url, payload);
   } catch (error) {
     console.error(error);
   }
