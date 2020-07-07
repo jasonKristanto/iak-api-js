@@ -1,7 +1,7 @@
 {
   "name": "indobest_artha_kreasi",
   "version": "1.0.0",
-  "description": "IAK client library for NodeJS",
+  "description": "IAK client library for JavaScript",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -10,12 +10,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/apriady/digiflazz.git"
+    "url": "git+https://github.com/iak-id/iak-api-js.git"
   },
   "bugs": {
-    "url": "https://github.com/apriady/digiflazz/issues"
+    "url": "https://github.com/iak-id/iak-api-js/issues"
   },
-  "homepage": "https://github.com/apriady/digiflazz#readme",
+  "homepage": "https://github.com/iak-id/iak-api-js#readme",
   "author": "Indobest Artha Kreasi <techsupport@mobilepulsa.com>",
   "license": "MIT",
   "dependencies": {
