@@ -1,5 +1,6 @@
 import { endpoint } from "../config/config";
 import { hashSign } from "./Helpers/SignHelper";
+import { isEmptyString } from "./Helpers/Helper";
 import { sendRequest } from "./Helpers/RequestHelper";
 
 const headerRequest = {
@@ -20,13 +21,13 @@ function getReceiptUrl(env, tr_id) {
   return getBaseUrl(env) + "api/v1/download/" + tr_id + "/1";
 }
 
-export const pricelist = async (env, username, key, status, type = '', province = '') => {
+export const pricelist = async (env, username, key, status, type = null, province = null) => {
   try {
     const commands = "pricelist-pasca";
 
     let url = getMainUrl(env);
 
-    url += type !== '' ? "/" + type : "";
+    url += !isEmptyString(type) ? "/" + type : "";
 
     let payload = {
       commands,
@@ -35,7 +36,9 @@ export const pricelist = async (env, username, key, status, type = '', province 
       status
     };
 
-    if (type === 'pdam' && province !== '') payload['province'] = province;
+    if (type === 'pdam' && !isEmptyString(province)) {
+      payload['province'] = province;
+    }
 
     return await sendRequest("POST", headerRequest, url, payload);
   } catch (error) {
