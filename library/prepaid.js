@@ -27,9 +27,12 @@ export const checkBalance = async (env, username, key) => {
   }
 };
 
-export const pricelist = async (env, username, key, status) => {
+export const pricelist = async (env, username, key, status, type = '', operator = '') => {
   try {
-    const url = getBaseUrl(env) + "pricelist";
+    let url = getBaseUrl(env) + "pricelist";
+
+    url += type !== '' ? "/" + type : "";
+    url += type !== '' && operator !== '' ? "/" + operator : "";
 
     const payload = {
       username,
