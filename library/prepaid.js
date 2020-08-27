@@ -1,5 +1,6 @@
 import { endpoint } from "../config/config";
 import { hashSign } from "./Helpers/SignHelper";
+import { isEmptyString } from "./Helpers/Helper";
 import { sendRequest } from "./Helpers/RequestHelper";
 
 const headerRequest = {
@@ -27,9 +28,12 @@ export const checkBalance = async (env, username, key) => {
   }
 };
 
-export const pricelist = async (env, username, key, status) => {
+export const pricelist = async (env, username, key, status, type = null, operator = null) => {
   try {
-    const url = getBaseUrl(env) + "pricelist";
+    let url = getBaseUrl(env) + "pricelist";
+
+    url += !isEmptyString(type) ? "/" + type : "";
+    url += (!isEmptyString(type) && !isEmptyString(operator)) ? "/" + operator : "";
 
     const payload = {
       username,
